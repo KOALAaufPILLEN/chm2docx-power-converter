@@ -29,3 +29,33 @@ This script solves the issue by bypassing Word during the heavy lifting: it deco
 3. If script execution is blocked on your machine, temporarily bypass it using:
    ```powershell
    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+4.Run the script:
+open PowerShell
+.\chm2docx-power-converter.ps1
+
+5.Enter the requested parameters:
+
+ChmFilePath: The full path to your .chm file (e.g., C:\Users\Name\Downloads\Manual.chm).
+
+OutputDirectory: The destination folder where you want your files saved.
+
+📂 Output Structure
+After a successful run, your destination folder will look like this:
+
+Plaintext
+📁 Your-Output-Folder/
+├── 📁 CHM_Entpackt/            # Raw decompiled HTML pages and images
+└── 📄 Copilot_Wissensbasis.docx # The final file ready for Copilot Studio!
+
+⚙️ How it Works under the Hood
+Clean & Prepare: Uses Unblock-File and creates a temporary processing file without spaces or parentheses to respect the limitations of the ancient hh.exe decompiler.
+
+Decompile: Extracts all internal HTML files and image folders.
+
+PowerShell Stitching: Reads the raw <body> of all files and merges them sequentially into a single Copilot_Master_Wissen.html using UTF-8 encoding to preserve special characters.
+
+Word Conversion: Launches a headless Word instance (Word.Application), opens the massive HTML file, and saves it as a standard, high-compatibility .docx document before cleaning up the workspace.
+
+📄 License
+This project is open-source and available under the MIT License.
